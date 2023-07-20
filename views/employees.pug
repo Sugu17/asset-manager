@@ -1,0 +1,8 @@
+extends layout.pug
+
+block content
+  div.card
+    ul.list-group.list-group-flush
+      each employee in employees
+        li.list-group-item #{employee.name}
+
