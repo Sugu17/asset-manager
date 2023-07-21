@@ -11,14 +11,22 @@ const Employee = db.define("Employee", {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  department: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
+
+Employee.sync({ force: true })
+  .then(() => console.log("Employee table created...."))
+  .catch((err) => console.log("Error creating employee table"));
 
 Employee.bulkCreate(mockData)
   .then(() => console.log("Database populated"))
   .catch((err) => console.log("Error in populating db", err.message));
-
-Employee.sync()
-  .then(() => console.log("Employee table created...."))
-  .catch((err) => console.log("Error creating employee table"));
 
 module.exports = Employee;
