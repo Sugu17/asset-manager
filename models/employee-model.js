@@ -17,7 +17,7 @@ Employee.bulkCreate(mockData)
   .then(() => console.log("Database populated"))
   .catch((err) => console.log("Error in populating db", err.message));
 
-Employee.sync({ force: true })
+Employee.sync()
   .then(() => console.log("Employee table created...."))
   .catch((err) => console.log("Error creating employee table"));
 
