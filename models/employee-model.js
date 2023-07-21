@@ -21,9 +21,9 @@ const Employee = db.define("Employee", {
   },
 });
 
-Employee.sync({ force: true })
-  .then(() => console.log("Employee table created...."))
-  .catch((err) => console.log("Error creating employee table"));
+// Employee.sync({ force: true })
+//   .then(() => console.log("Employee table created...."))
+//   .catch((err) => console.log("Error creating employee table"));
 
 Employee.bulkCreate(mockData)
   .then(() => console.log("Database populated"))

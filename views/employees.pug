@@ -1,8 +1,8 @@
 extends layout.pug
 
 block content 
-  div.p-3.d-flex.flex-column.gap-3
-    form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees/active" method="post")
+  div.p-3.d-flex.flex-column.gap-3.bg-light
+    form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees" method="get")
       input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
       label.form-check-label(for="activefilerSwitch") Only Active Users
 
@@ -22,20 +22,20 @@ block content
           location.assign("/employees");
       }
 
-    table.table.display.table-primary#employee-table
+    table.table.display.table-light.table-striped#employee-table
       thead 
         tr 
           th(scope="col") Name
-          th(scope="col") Active
-          th(scope="col") Edit 
+          th(scope="col") Phone Number
+          th(scope="col") Department 
       tbody 
           each value of employees
             tr 
               td #{value.name}
-              td #{value.isActive}
-              td Edit
+              td #{value.phone}
+              td #{value.department}
 
-    form.d-flex.flex-column.gap-4(action="/employees", method="post")
+    form.d-flex.flex-column.gap-4(action="", method="post")
       div
         label.form-label(for="name") Employee Name
         input.form-control(type="text", name="name",id="name") 
