@@ -1,9 +1,10 @@
 const navLinks = document.getElementsByClassName("nav-link");
 for (const link of navLinks) {
-  const route = link.getAttribute("href");
-  const isActive = window.location.pathname.slice(1).includes(route);
-  if (isActive) {
-    link.classList.add("active");
+  const currentLoc = window.location.pathname;
+  if (link.getAttribute("href") === currentLoc) {
     link.children.item(0).classList.remove("visually-hidden");
+    link.classList.add("active");
+  } else {
+    link.classList.add("text-bg-light");
   }
 }

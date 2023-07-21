@@ -1,46 +1,85 @@
 extends layout.pug
 
 block content 
-  div.p-3.d-flex.flex-column.gap-3.bg-light
-    form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees" method="get")
-      input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
-      label.form-check-label(for="activefilerSwitch") Only Active Users
-
-    script.
-      const toggler=document.getElementById("activefilerSwitch")
-      const isActive=toggler.value==="active";
-      if(isActive){
-        toggler.setAttribute("checked","true")
-      }
-
-      function filterSubmit(event){
-        const activeSwitch=event.currentTarget;
-        if(activeSwitch.value==="inactive"){
-          activeSwitch.closest('form').submit();
+  div.p-4.d-flex.flex-row.gap-5.bg-light
+    div.d-flex.flex-column.gap-4.flex-grow-1
+      form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees" method="get")
+        input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
+        label.form-check-label(for="activefilerSwitch") Only Active Users
+      script.
+        if(document.URL.includes("filterBy=active"))
+          document.getElementById("activefilerSwitch").setAttribute("checked","true")
+        function filterSubmit(event){
+          const activeSwitch=event.currentTarget;
+          if(activeSwitch.value==="inactive"){
+            activeSwitch.value="active"
+            activeSwitch.closest('form').submit();
+          }
+          else 
+            window.location.href="/employees"
         }
-        else 
-          location.assign("/employees");
-      }
+      .container.fluid.p-3.rounded-5
+        .modal.fade#editModal(tabindex=-1 aria-labelledby="editModalLabel" aria-hidden="true")
+          .modal-dialog
+            .modal-content
+              .modal-header 
+                h1.modal-title.fs-5#editModalLabel Edit details
+                button.btn-close(type="button" data-bs-dismiss="modal" aria-label="close")
+              .modal-body
+                form(action="") 
+                  .mb-3
+                    label.form-label(for="editname") Edit name 
+                    input.form-control(type="text", name="name" id="editname")
+                  .mb-3 
+                    label.form-label(for="editphone") Edit phone number 
+                    input.form-control(type="tel", name="phone" id="editphone")
+                  .mb-3 
+                    label.form-label(for="editdepartment") Department 
+                    input.form-control(type="text", name="department" id="editdepartment")
+                  .mb-3.d-flex.gap-3 
+                    input.form-check-input(type="checkbox", name="isActive",id="editIsActive")
+                    label.form-check-label(for="editIsActive") Active Employee?
+              .modal-footer
+                button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel 
+                button.btn.btn-primary(type="button" data-bs-dismiss="modal") Update
 
-    table.table.display.table-light.table-striped#employee-table
-      thead 
-        tr 
-          th(scope="col") Name
-          th(scope="col") Phone Number
-          th(scope="col") Department 
-      tbody 
-          each value of employees
+        table.table.display.table-light.table-hover#employee-table
+          thead
             tr 
-              td #{value.name}
-              td #{value.phone}
-              td #{value.department}
+              th(scope="col") Name
+              th(scope="col") Phone Number
+              th(scope="col") Department 
+              th(scope="col") Edit
+          tbody
+              each value of employees
+                tr 
+                  td #{value.name}
+                  td #{value.phone}
+                  td #{value.department}
+                  td 
+                    button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-data=value) Edit
 
-    form.d-flex.flex-column.gap-4(action="", method="post")
+    form.d-flex.flex-column.align-items-start.mt-5.bg-light.justify-content-center.gap-4(action="/employees", method="post")
+      h2 Create a new user
       div
         label.form-label(for="name") Employee Name
         input.form-control(type="text", name="name",id="name") 
+      div
+        label.form-label(for="phone") Phone number
+        input.form-control(type="tel", name="phone",id="phone")
+      div
+        label.form-label(for="department") Department
+        input.form-control(type="text", name="department",id="department") 
       div.d-flex.gap-3
         input.form-check-input(type="checkbox", name="active",id="isActive")
         label.form-check-label(for="isActive") Active Employee?
-      button.btn.btn-primary.align-self-center.w-50(type="submit") Add
-
+      button.btn.btn-primary.w-50(type="submit") Add
+      .alert.alert-success(role="alert" class=alert||"d-none" id="userAddAlert") New user added successfully 
+    script.
+      const alert=document.getElementById("userAddAlert")
+      setTimeout(()=>{
+        if(alert.classList.contains("d-block")){
+          alert.classList.replace("d-block","d-none");
+        }
+      },5000);
+  script(src="/javascripts/employeeModal.js") 
