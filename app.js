@@ -4,8 +4,8 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/employees");
-const db = require("./models/index");
+var employeeRouter = require("./routes/employees");
+const db = require("./models/db");
 
 var app = express();
 
@@ -19,13 +19,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-db.sequelize
-  .sync()
-  .then(() => console.log("Synced to db!"))
-  .catch((err) => console.log("Failed to sync db!", err.message));
-
 app.use("/", indexRouter);
-app.use("/employees", usersRouter);
+app.use("/employees", employeeRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
