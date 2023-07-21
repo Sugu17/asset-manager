@@ -1,8 +1,27 @@
 extends layout.pug
 
-block content
-  div.card
-    ul.list-group.list-group-flush
-      each employee in employees
-        li.list-group-item #{employee.name}
+block content 
+  div.p-3
+    table.table.table-striped 
+      thead 
+        tr 
+          th(scope="col") Name
+          th(scope="col") Active
+          th(scope="col") Edit 
+      tbody 
+          each value of employees
+            tr 
+              td #{value.name}
+              td #{value.isActive}
+              td Edit
+    form.d-flex.flex-column.gap-4(action="/employees", method="post")
+      div
+        label.form-label(for="name") Employee Name
+        input.form-control(type="text", name="name",id="name") 
+      div.d-flex.gap-3
+        input.form-check-input(type="checkbox", name="active",id="isActive")
+        label.form-check-label(for="isActive") Active Employee?
+      button.btn.btn-primary.align-self-center.w-50(type="submit") Add
+
+
 
