@@ -1,5 +1,4 @@
 const navLinks = document.getElementsByClassName("nav-link");
-
 for (const link of navLinks) {
   const route = link.getAttribute("href");
   const isActive = window.location.pathname.slice(1).includes(route);

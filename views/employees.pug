@@ -1,8 +1,28 @@
 extends layout.pug
 
 block content 
-  div.p-3
-    table.table.table-striped#employee-table
+  div.p-3.d-flex.flex-column.gap-3
+    form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees/active" method="post")
+      input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
+      label.form-check-label(for="activefilerSwitch") Only Active Users
+
+    script.
+      const toggler=document.getElementById("activefilerSwitch")
+      const isActive=toggler.value==="active";
+      if(isActive){
+        toggler.setAttribute("checked","true")
+      }
+
+      function filterSubmit(event){
+        const activeSwitch=event.currentTarget;
+        if(activeSwitch.value==="inactive"){
+          activeSwitch.closest('form').submit();
+        }
+        else 
+          location.assign("/employees");
+      }
+
+    table.table.display.table-primary#employee-table
       thead 
         tr 
           th(scope="col") Name
@@ -14,6 +34,7 @@ block content
               td #{value.name}
               td #{value.isActive}
               td Edit
+
     form.d-flex.flex-column.gap-4(action="/employees", method="post")
       div
         label.form-label(for="name") Employee Name
@@ -23,11 +44,3 @@ block content
         label.form-check-label(for="isActive") Active Employee?
       button.btn.btn-primary.align-self-center.w-50(type="submit") Add
 
-block scripts 
-  script(src="/javascripts/jquery/jquery.js") 
-  script(src="/javascripts/datatables/datatables.js")
-  script.
-    let table=new DataTable("#employee-table",{});
-    
-block stylesheets 
-  link(rel="stylesheet", href="/stylesheets/datatables.css")

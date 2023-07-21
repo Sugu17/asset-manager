@@ -5,9 +5,10 @@ html(lang="en")
     meta(name='viewport' content='width=device-width, initial-scale=1.0')
     title Layout Page
     link(rel='stylesheet' href='/stylesheets/bootstrap/bootstrap.min.css')
-    block stylesheets
+    link(rel="stylesheet", href="/stylesheets/datatables.css")
+    script(src="/javascripts/jquery/jquery.js") 
+    script(src="/javascripts/datatables/datatables.js") 
     script(src='/javascripts/fontawesome.js' crossorigin='anonymous')
-    block scripts
   body
     main
       .d-flex
@@ -48,3 +49,5 @@ html(lang="en")
         .flex-grow-1.bg-primary-subtle
           block content      
   script(src='/javascripts/layout.js')
+  script(src="/javascripts/table-init.js") 
+
