@@ -1,8 +1,5 @@
 var express = require("express");
-const db = require("../models/db");
 const Employee = require("../models/employee-model");
-const { where } = require("sequelize");
-
 var router = express.Router();
 
 router.get("/", async (req, res, next) => {
@@ -59,6 +56,14 @@ router.post("/", async (req, res, next) => {
     filterType: "inactive",
     alertMessage: message,
   });
+});
+
+router.delete("/:employeeId", async (req, res) => {
+  const employeeToBeDeletedId = req.params.employeeId;
+  const count = await Employee.destroy({
+    where: { id: employeeToBeDeletedId },
+  });
+  res.send(`Deleted user ${count} employee with id ${employeeToBeDeletedId}`);
 });
 
 module.exports = router;

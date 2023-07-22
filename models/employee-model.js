@@ -1,5 +1,5 @@
 const db = require("./db");
-const { Sequelise, DataTypes } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const mockData = require("../seeders/employee-mock");
 
 const Employee = db.define(
@@ -34,14 +34,14 @@ const Employee = db.define(
   }
 );
 
-Employee.sync({})
+Employee.sync()
   .then(() => console.log("Employee table created...."))
   .catch((err) => console.log("Error creating employee table"));
 
-Employee.drop().then(() => console.log("Db dropped"));
+// Employee.drop().then(() => console.log("Db dropped"));
 
-Employee.bulkCreate(mockData)
-  .then(() => console.log("Database populated"))
-  .catch((err) => console.log("Error in populating db", err.message));
+// Employee.bulkCreate(mockData)
+//   .then(() => console.log("Database populated"))
+//   .catch((err) => console.log("Error in populating db", err.message));
 
 module.exports = Employee;

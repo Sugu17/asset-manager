@@ -3,7 +3,6 @@ if (employeeEditModal) {
   employeeEditModal.addEventListener("show.bs.modal", (event) => {
     const button = event.relatedTarget;
     const data = JSON.parse(button.getAttribute("data-bs-data"));
-    console.log("curr data", data);
     const idField = document.getElementById("empId");
     const nameField = document.getElementById("editname");
     const phoneField = document.getElementById("editphone");

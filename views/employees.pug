@@ -38,7 +38,8 @@ block content
                 td 
                   button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-data=value) Edit
                 td 
-                  button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value) Delete
+                  button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
+                  input(type="hidden", name="deletionId" value=value.id)
 
     form.d-flex.flex-column.align-items-start.mt-5.bg-light.justify-content-center.gap-4(action="/employees", method="post")
       h2 Create a new user
@@ -64,5 +65,6 @@ block content
         }
       },5000);
   script(src="/javascripts/custom/employeeModal.js") 
+  script(src="/javascripts/custom/deleteModal.js") 
 
 
