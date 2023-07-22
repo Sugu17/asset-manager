@@ -9,4 +9,5 @@ const assetTable = new DataTable("#asset-table", {
 
 const categoryTable = new DataTable("#category-table", {
   pageLength: 9,
+  columnDefs: [{ orderable: false, targets: [1, 2] }],
 });

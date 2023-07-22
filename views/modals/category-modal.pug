@@ -1,0 +1,16 @@
+block modal 
+  .modal.fade#editModal(tabindex=-1 aria-labelledby="editModalLabel" aria-hidden="true")
+    .modal-dialog
+      .modal-content
+        .modal-header 
+          h1.modal-title.fs-5#editModalLabel Edit category
+          button.btn-close(type="button" data-bs-dismiss="modal" aria-label="close")
+        .modal-body
+          form#update-form(action="/categories" method="POST") 
+            input(type="hidden", name="id" id="categoryId") 
+            .mb-3
+              label.form-label(for="editname") Edit Category Name 
+              input.form-control(type="text", name="name" id="editname") 
+            .modal-footer
+              button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel 
+              button.btn.btn-primary(type="submit") Update
