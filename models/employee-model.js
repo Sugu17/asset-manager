@@ -2,24 +2,37 @@ const db = require("./db");
 const { Sequelise, DataTypes } = require("sequelize");
 const mockData = require("../seeders/employee-mock");
 
-const Employee = db.define("Employee", {
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
+const Employee = db.define(
+  "Employee",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      unique: true,
+      allowNull: false,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    department: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
-  isActive: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-  },
-  phone: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  department: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
+  {
+    tableName: "Employee",
+  }
+);
 
 Employee.sync({})
   .then(() => console.log("Employee table created...."))

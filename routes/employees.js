@@ -1,13 +1,13 @@
 var express = require("express");
 const db = require("../models/db");
 const Employee = require("../models/employee-model");
+const { where } = require("sequelize");
 
 var router = express.Router();
 
 router.get("/", async (req, res, next) => {
   const employees = await Employee.findAll();
   const queries = req.query;
-
   if (queries.filterBy) {
     const filterResponse = employees.filter(
       (employee) => employee.isActive === true
@@ -19,20 +19,45 @@ router.get("/", async (req, res, next) => {
   } else res.render("employees", { employees, filterType: "inactive" });
 });
 
+const updateEmployee = async (req, res, existingEmployee) => {
+  const clientData = req.body;
+  const updatedEmployee = await existingEmployee.update({
+    name: clientData.name,
+    phone: clientData.phone,
+    department: clientData.department,
+    isActive: clientData.isActive ? true : false,
+  });
+  return `Employee ID - ${updatedEmployee.id} updated with new details`;
+};
+
+const addEmployee = async (req, res) => {
+  const clientData = req.body;
+  const newEmployee = await Employee.create({
+    name: clientData.name,
+    isActive: clientData.active ?? false,
+    phone: clientData.phone,
+    department: clientData.department,
+  });
+  return `Employee ID - ${newEmployee.id} added successfully`;
+};
+
 router.post("/", async (req, res, next) => {
-  const data = req.body;
-  if (data.name)
-    await Employee.create({
-      name: data.name,
-      isActive: data.active ?? false,
-      phone: data.phone,
-      department: data.department,
-    });
+  const clientData = req.body;
+  let message;
+  if (clientData.name) {
+    const existingEmployee = await Employee.findByPk(clientData.id);
+    if (existingEmployee) {
+      message = await updateEmployee(req, res, existingEmployee);
+    } else {
+      message = await addEmployee(req, res);
+    }
+  }
   const employees = await Employee.findAll();
   res.render("employees", {
     employees,
     alert: "d-block",
     filterType: "inactive",
+    alertMessage: message,
   });
 });
 
