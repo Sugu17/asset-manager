@@ -19,8 +19,8 @@ block content
             window.location.href="/employees"
         }
       .container.fluid.p-3.rounded-5
-        include modals/employee-modal
-        include modals/confirm-modal
+        include modals/employees/employee-modal
+        include modals/employees/confirm-modal
         table.table.display.table-light.table-hover#employee-table
           thead
             tr 
@@ -64,7 +64,7 @@ block content
           alert.classList.replace("d-block","d-none");
         }
       },5000);
-  script(src="/javascripts/custom/employeeModal.js") 
-  script(src="/javascripts/custom/deleteModal.js") 
+  script(src="/javascripts/custom/employees/employeeModal.js") 
+  script(src="/javascripts/custom/employees/deleteModal.js") 
 
 

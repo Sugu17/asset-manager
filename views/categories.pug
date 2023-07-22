@@ -4,8 +4,8 @@ block content
   div.p-4.d-flex.flex-row.gap-5.bg-light
     .container.fluid.p-0.rounded-5.w-75
       h2.mb-4 Categories
-      include modals/employee-modal
-      include modals/confirm-modal
+      include modals/categories/category-modal
+      include modals/categories/confirm-modal
       table.table.display.table-light.table-hover#category-table
         thead
           tr 
@@ -36,7 +36,7 @@ block content
           alert.classList.replace("d-block","d-none");
         }
       },5000);
-  script(src="/javascripts/custom/employeeModal.js") 
-  script(src="/javascripts/custom/deleteModal.js") 
+  script(src="/javascripts/custom/categories/categoryModal.js") 
+  script(src="/javascripts/custom/categories/deleteModal.js") 
 
 

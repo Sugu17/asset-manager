@@ -2,22 +2,6 @@ extends layout.pug
 
 block content 
   div.p-4.d-flex.flex-row.gap-5.bg-light
-    div.d-flex.flex-column.gap-4.flex-grow-1
-      form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees" method="get")
-        input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
-        label.form-check-label(for="activefilerSwitch") Only Active Users
-      script.
-        if(document.URL.includes("filterBy=active"))
-          document.getElementById("activefilerSwitch").setAttribute("checked","true")
-        function filterSubmit(event){
-          const activeSwitch=event.currentTarget;
-          if(activeSwitch.value==="inactive"){
-            activeSwitch.value="active"
-            activeSwitch.closest('form').submit();
-          }
-          else 
-            window.location.href="/employees"
-        }
       .container.fluid.p-3.rounded-5
         include modals/employee-modal
         include modals/confirm-modal

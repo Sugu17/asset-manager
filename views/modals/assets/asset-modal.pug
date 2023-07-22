@@ -1,0 +1,24 @@
+.modal.fade#editModal(tabindex=-1 aria-labelledby="editModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header 
+        h1.modal-title.fs-5#editModalLabel Edit asset details
+        button.btn-close(type="button" data-bs-dismiss="modal" aria-label="close")
+      .modal-body
+        form#update-form(action="/assets" method="POST") 
+          input(type="hidden", name="id" id="assetId") 
+          .mb-3
+            label.form-label(for="editmake") Edit Make 
+            input.form-control(type="text", name="name" id="editname")
+          .mb-3 
+            label.form-label(for="editmodel") Edit Model 
+            input.form-control(type="text", name="phone" id="editmodel")
+          .mb-3 
+            label.form-label(for="editseries") Edit Series
+            input.form-control(type="text", name="department" id="editseries")
+          .mb-3 
+            label.form-label(for="editserial") Edit Serial Number
+            input.form-control(type="text", name="department" id="editserial")
+          .modal-footer
+            button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel 
+            button.btn.btn-primary(type="submit") Update
