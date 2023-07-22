@@ -1,0 +1,72 @@
+extends layout.pug
+
+block content 
+  div.p-4.d-flex.flex-row.gap-5.bg-light
+    div.d-flex.flex-column.gap-4.flex-grow-1
+      form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees" method="get")
+        input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
+        label.form-check-label(for="activefilerSwitch") Only Active Users
+      script.
+        if(document.URL.includes("filterBy=active"))
+          document.getElementById("activefilerSwitch").setAttribute("checked","true")
+        function filterSubmit(event){
+          const activeSwitch=event.currentTarget;
+          if(activeSwitch.value==="inactive"){
+            activeSwitch.value="active"
+            activeSwitch.closest('form').submit();
+          }
+          else 
+            window.location.href="/employees"
+        }
+      .container.fluid.p-3.rounded-5
+        include modals/employee-modal
+        include modals/confirm-modal
+        table.table.display.table-light.table-hover#employee-table
+          thead
+            tr 
+              th(scope="col") Make
+              th(scope="col") Model
+              th(scope="col") Series 
+              th(scope="col") Serial Number
+              th(scope="col") Edit
+              th(scope="col") Delete
+          tbody
+            each value of assets
+              tr
+                td #{value.make} 
+                td #{value.model} 
+                td #{value.series} 
+                td #{value.serialNumber}
+                td 
+                  button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-data=value) Edit
+                td 
+                  button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
+                  input(type="hidden", name="deletionId" value=value.id)
+
+    form.d-flex.flex-column.align-items-start.mt-5.bg-light.gap-4(action="/employees", method="post")
+      h2 Create a new asset
+      div
+        label.form-label(for="make") Make
+        input.form-control(type="text", name="make",id="make" placeholder="Dell") 
+      div
+        label.form-label(for="model") Model
+        input.form-control(type="text", name="model",id="model" placeholder="XPS")
+      div
+        label.form-label(for="series") Series
+        input.form-control(type="text", name="series",id="series" placeholder="15") 
+      div
+        label.form-label(for="serialNumber") Serial Number
+        input.form-control(type="text", name="serialNumber",id="serialNumber" placeholder="XXX-XXX-XXX")
+      button.btn.btn-primary.w-50(type="submit") Add
+      .alert.alert-success(role="alert" class=alert||"d-none" id="userAddAlert") #{alertMessage} 
+    script.
+      const alert=document.getElementById("userAddAlert")
+      setTimeout(()=>{
+        if(alert.classList.contains("d-block")){
+          alert.classList.replace("d-block","d-none");
+        }
+      },5000);
+  script(src="/javascripts/custom/employeeModal.js") 
+  script(src="/javascripts/custom/deleteModal.js") 
+
+

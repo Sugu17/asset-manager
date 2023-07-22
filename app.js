@@ -5,7 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const indexRouter = require("./routes/index-route");
 const employeeRouter = require("./routes/employees-route");
-const assetRouter = require("./routes/assets.route");
+const assetRouter = require("./routes/assets-route");
 const app = express();
 
 // view engine setup
