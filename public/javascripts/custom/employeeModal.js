@@ -19,24 +19,3 @@ if (employeeEditModal) {
     }
   });
 }
-
-// const updateForm = document.getElementById("update-form");
-// updateForm.addEventListener("submit", (event) => {
-//   event.preventDefault();
-//   const formData = new FormData(event.currentTarget);
-//   const updatedData = {
-//     id: formData.get("id"),
-//     name: formData.get("name"),
-//     phone: formData.get("phone"),
-//     department: formData.get("department"),
-//     isActive: formData.get("isActive"),
-//   };
-//   fetch("/employees", {
-//     method: "PUT",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(updatedData),
-//   }).then(() => {
-//     console.log("Data submitted");
-//     location.reload();
-//   });
-// });

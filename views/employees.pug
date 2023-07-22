@@ -19,31 +19,8 @@ block content
             window.location.href="/employees"
         }
       .container.fluid.p-3.rounded-5
-        .modal.fade#editModal(tabindex=-1 aria-labelledby="editModalLabel" aria-hidden="true")
-          .modal-dialog
-            .modal-content
-              .modal-header 
-                h1.modal-title.fs-5#editModalLabel Edit details
-                button.btn-close(type="button" data-bs-dismiss="modal" aria-label="close")
-              .modal-body
-                form#update-form(action="/employees" method="POST") 
-                  input(type="hidden", name="id" id="empId") 
-                  .mb-3
-                    label.form-label(for="editname") Edit name 
-                    input.form-control(type="text", name="name" id="editname")
-                  .mb-3 
-                    label.form-label(for="editphone") Edit phone number 
-                    input.form-control(type="tel", name="phone" id="editphone")
-                  .mb-3 
-                    label.form-label(for="editdepartment") Department 
-                    input.form-control(type="text", name="department" id="editdepartment")
-                  .mb-3.d-flex.gap-3 
-                    input.form-check-input(type="checkbox", name="isActive",id="editIsActive")
-                    label.form-check-label(for="editIsActive") Active Employee?
-                  .modal-footer
-                    button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel 
-                    button.btn.btn-primary(type="submit") Update
-
+        include modals/employee-modal
+        include modals/confirm-modal
         table.table.display.table-light.table-hover#employee-table
           thead
             tr 
@@ -51,14 +28,17 @@ block content
               th(scope="col") Phone Number
               th(scope="col") Department 
               th(scope="col") Edit
+              th(scope="col") Delete
           tbody
-              each value of employees
-                tr 
-                  td #{value.name}
-                  td #{value.phone}
-                  td #{value.department}
-                  td 
-                    button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-data=value) Edit
+            each value of employees
+              tr 
+                td #{value.name}
+                td #{value.phone}
+                td #{value.department}
+                td 
+                  button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-data=value) Edit
+                td 
+                  button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value) Delete
 
     form.d-flex.flex-column.align-items-start.mt-5.bg-light.justify-content-center.gap-4(action="/employees", method="post")
       h2 Create a new user
@@ -83,4 +63,6 @@ block content
           alert.classList.replace("d-block","d-none");
         }
       },5000);
-  script(src="/javascripts/employeeModal.js") 
+  script(src="/javascripts/custom/employeeModal.js") 
+
+

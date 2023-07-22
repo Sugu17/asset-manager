@@ -1,0 +1,13 @@
+
+#confirmModal.modal.fade(tabindex='-1' aria-labelledby='confirmModalLabel' aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h1#confirmModalLabel.modal-title.fs-5 Confirm deletion
+        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+      .modal-body
+        p.fs-5.fw-medium Do you want to delete the employee?
+        p.text-warning.fs-5.fw-semibold This action is not reversible!
+      .modal-footer
+        button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Cancel
+        button.btn.btn-danger(type='button') Confirm
