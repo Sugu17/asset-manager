@@ -1,6 +1,8 @@
 const db = require("./db");
 const { DataTypes } = require("sequelize");
+const Category = require("./category-model");
 
+// Asset model
 const Asset = db.define(
   "Asset",
   {
@@ -34,6 +36,13 @@ const Asset = db.define(
   }
 );
 
-Asset.sync({ force: false }).then(() => console.log("Asset tables synced..."));
+// Relationship
+Category.hasMany(Asset);
+Asset.belongsTo(Category);
+
+Category.sync({ force: true }).then(() =>
+  console.log("Category tables synced...")
+);
+Asset.sync({ force: true }).then(() => console.log("Asset tables synced..."));
 
 module.exports = Asset;
