@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.get("/", async (req, res, next) => {
   const employees = await Employee.findAll({ include: Asset });
-  const assets = await Asset.findAll();
+  const assets = await Asset.findAll({ where: { EmployeeId: null } });
   const categories = await Category.findAll();
   const queries = req.query;
   if (queries.filterBy) {
@@ -26,54 +26,34 @@ router.get("/", async (req, res, next) => {
     });
 });
 
-const updateEmployee = async (req, res, existingEmployee) => {
+const issueAsset = async (req, res) => {
   const clientData = req.body;
-  const updatedEmployee = await existingEmployee.update({
-    name: clientData.name,
-    phone: clientData.phone,
-    department: clientData.department,
-    isActive: clientData.isActive ? true : false,
+  const selectedAsset = await Asset.findByPk(clientData.assetId, {
+    include: Employee,
   });
-  return `Employee ID - ${updatedEmployee.id} updated with new details`;
-};
-
-const addEmployee = async (req, res) => {
-  const clientData = req.body;
-  const newEmployee = await Employee.create({
-    name: clientData.name,
-    isActive: clientData.active ?? false,
-    phone: clientData.phone,
-    department: clientData.department,
-  });
-  return `Employee ID - ${newEmployee.id} added successfully`;
+  selectedAsset.update({ EmployeeId: clientData.employeeId });
+  return `Employee ID - ${clientData.employeeId} issued ASN#${selectedAsset.serialNumber}`;
 };
 
 router.post("/", async (req, res, next) => {
   const clientData = req.body;
   let message;
-  if (clientData.name) {
-    const existingEmployee = await Employee.findByPk(clientData.id);
-    if (existingEmployee) {
-      message = await updateEmployee(req, res, existingEmployee);
-    } else {
-      message = await addEmployee(req, res);
-    }
-  }
+  const categories = await Category.findAll();
+  const assets = await Asset.findAll({ where: { EmployeeId: null } });
   const employees = await Employee.findAll();
-  res.render("employees", {
+
+  if (clientData.employeeId) {
+    message = await issueAsset(req, res);
+  }
+  res.render("issue", {
     employees,
     alert: "d-block",
+
     filterType: "inactive",
     alertMessage: message,
+    categories,
+    assets,
   });
-});
-
-router.delete("/:employeeId", async (req, res) => {
-  const employeeToBeDeletedId = req.params.employeeId;
-  const count = await Employee.destroy({
-    where: { id: employeeToBeDeletedId },
-  });
-  res.send(`Deleted user ${count} employee with id ${employeeToBeDeletedId}`);
 });
 
 module.exports = router;

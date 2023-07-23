@@ -34,8 +34,11 @@ block content
                 td #{value.department}
                 - const selectId="sel"+value.id
                 td
-                  button.btn.btn-success(type="submit" id=selectId data-selectedEmp=value onClick="handleIssueSelect(event)") Select
+                  button.btn.btn-success.selectorBtn(type="submit" id=selectId data-selectedEmp=value onClick="handleIssueSelect(event)") Select
                   input(type="hidden", name="allAssets" id="allAssets" value=assets)
+      
+      .alert.alert-success(role="alert" class=alert||"d-none" id="issueAddAlert") #{alertMessage} 
+
     .d-flex.flex-column.align-items-start.mt-2.bg-light.gap-3
       .card
         .card-header.fs-4.fw-semibold Selected Employee
@@ -59,18 +62,24 @@ block content
             each value of categories 
               li
                 a.dropdown-item(onClick="handleCategoryChange(event)" data-category=value.id) #{value.name}
-        form(action="/employees", method="post")
-          label.form-label.fs-5.fw-medium(for="assetSel") Asset to issue
-          select.form-select(name="issueAsset" id="assetSel" aria-label="Select an asset to issue") 
-            option(selected) Select asset!
-      .alert.alert-success(role="alert" class=alert||"d-none" id="userAddAlert") #{alertMessage} 
+        form.d-flex.flex-column.gap-5(action="/issue", method="post")
+          input(type="hidden" name="employeeId" id="selEmployeeId")
+          div
+            label.form-label.fs-5.fw-medium(for="assetSel") Asset to issue
+            select.form-select(name="assetId" id="assetSel" aria-label="Select an asset to issue" disabled) 
+              option(selected) Select asset!
+          button.btn.btn-primary(type="submit") Issue Asset
     script.
-      const alert=document.getElementById("userAddAlert")
+      const alert=document.getElementById("issueAddAlert")
       setTimeout(()=>{
         if(alert.classList.contains("d-block")){
           alert.classList.replace("d-block","d-none");
         }
       },5000);
+    script.
+      if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+      } 
   script(src="/javascripts/custom/issue/issueInput.js") 
 
 
