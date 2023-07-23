@@ -10,6 +10,8 @@ block content
           - const isActive=category.name===activeFilter?true:null;
             input.btn-check(type="checkbox" checked=isActive name="filterBy" id=filterId value=category.name autocomplete="off" onclick="handleFilterToggle(event)") 
             label.btn.btn-outline-primary(for=filterId) #{category.name}
+        input.btn-check(type="checkbox" name="clearFilters" id="clearFilters" value="clear" autocomplete="off" onclick="handleFilterToggle(event)") 
+        label.btn.btn-secondary(for="clearFilters") Clear Filters
       .container.fluid.p-3.rounded-5
         include modals/assets/asset-modal
         include modals/assets/confirm-modal

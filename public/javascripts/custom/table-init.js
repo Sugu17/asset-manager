@@ -5,6 +5,7 @@ const employeeTable = new DataTable("#employee-table", {
 
 const assetTable = new DataTable("#asset-table", {
   pageLength: 9,
+  columnDefs: [{ orderable: false, targets: [5, 6] }],
 });
 
 const categoryTable = new DataTable("#category-table", {
