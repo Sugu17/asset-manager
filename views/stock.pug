@@ -1,0 +1,15 @@
+extends layout
+
+block content 
+  .d-flex.px-5.py-4.bg-light
+    .card.m-3(style="width:30%;")
+      .card-header.fs-2.fw-semibold Stocks 
+      ul.list-group.list-group-flush
+        each value of categories 
+          li.list-group-item.d-flex.justify-content-between
+            - const assetCount=value.Assets.length; 
+              span #{value.name}
+              span.badge.bg-primary.rounded-circle.fs-6(style="padding:9px 12px") #{assetCount}
+      .card-footer.d-flex.justify-content-between.align-items-center
+        span.fs-4.fw-medium Total 
+        span.px-2.fs-3.fw-semibold #{total} 
