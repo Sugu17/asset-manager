@@ -7,18 +7,22 @@
       .modal-body
         form#update-form(action="/assets" method="POST") 
           input(type="hidden", name="id" id="assetId") 
+          .mb-3 
+            label.form-label(for="editcategory") Category
+            select.form-select(aria-label='Asset category selection' name="category" id="editcategory")
+              option() Select an asset category !
           .mb-3
             label.form-label(for="editmake") Edit Make 
-            input.form-control(type="text", name="name" id="editname")
+            input.form-control(type="text", name="model" id="editmake")
           .mb-3 
             label.form-label(for="editmodel") Edit Model 
-            input.form-control(type="text", name="phone" id="editmodel")
+            input.form-control(type="text", name="make" id="editmodel")
           .mb-3 
             label.form-label(for="editseries") Edit Series
-            input.form-control(type="text", name="department" id="editseries")
+            input.form-control(type="text", name="series" id="editseries")
           .mb-3 
-            label.form-label(for="editserial") Edit Serial Number
-            input.form-control(type="text", name="department" id="editserial")
+            label.form-label(for="editserial") Edit Serial Number (Must be unique!)
+            input.form-control(type="text", name="serialNumber" id="editserial")
           .modal-footer
             button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel 
             button.btn.btn-primary(type="submit") Update

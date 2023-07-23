@@ -40,9 +40,29 @@ const Asset = db.define(
 Category.hasMany(Asset);
 Asset.belongsTo(Category);
 
-Category.sync({ force: true }).then(() =>
+Category.sync({ force: false }).then(() =>
   console.log("Category tables synced...")
 );
-Asset.sync({ force: true }).then(() => console.log("Asset tables synced..."));
+Asset.sync({ force: false }).then(() => console.log("Asset tables synced..."));
+
+// Asset.create({
+//   make: "Dell",
+//   model: "XPS",
+//   series: "15",
+//   serialNumber: "23244309",
+//   CategoryId: 1,
+// })
+//   .then("Asset created")
+//   .catch((err) => console.log("Error adding asset", err));
+
+// Asset.create({
+//   make: "HP",
+//   model: "Omen",
+//   series: "15",
+//   serialNumber: "232443086",
+//   CategoryId: 1,
+// })
+//   .then("Asset created")
+//   .catch((err) => console.log("Error adding asset", err));
 
 module.exports = Asset;

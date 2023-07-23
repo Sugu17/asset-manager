@@ -2,33 +2,40 @@ extends layout.pug
 
 block content 
   div.p-4.d-flex.flex-row.gap-5.bg-light
-      .container.fluid.p-3.rounded-5
-        include modals/employee-modal
-        include modals/confirm-modal
-        table.table.display.table-light.table-hover#asset-table
-          thead
-            tr 
-              th(scope="col") Make
-              th(scope="col") Model
-              th(scope="col") Series 
-              th(scope="col") Serial Number
-              th(scope="col") Edit
-              th(scope="col") Delete
-          tbody
-            each value of assets
-              tr
-                td #{value.make} 
-                td #{value.model} 
-                td #{value.series} 
-                td #{value.serialNumber}
-                td 
-                  button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-data=value) Edit
-                td 
-                  button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
-                  input(type="hidden", name="deletionId" value=value.id)
-
-    form.d-flex.flex-column.align-items-start.mt-5.bg-light.gap-4(action="/employees", method="post")
+    .container.fluid.p-3.rounded-5
+      include modals/assets/asset-modal
+      include modals/assets/confirm-modal
+      table.table.display.table-light.table-hover#asset-table
+        thead
+          tr 
+            th(scope="col") Make
+            th(scope="col") Model
+            th(scope="col") Series 
+            th(scope="col") Serial Number
+            th(scope="col") Category
+            th(scope="col") Edit
+            th(scope="col") Delete
+        tbody
+          each value of assets
+            tr
+              td #{value.make} 
+              td #{value.model} 
+              td #{value.series} 
+              td #{value.serialNumber}
+              td #{value.categoryId}
+              td 
+                button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-asset=value data-bs-categories=categories) Edit
+              td 
+                button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
+                input(type="hidden", name="deletionId" value=value.id)
+    form.d-flex.flex-column.align-items-start.mt-3.bg-light.gap-3(action="/assets", method="post")
       h2 Create a new asset
+      div 
+        label.form-label(for="category") Category
+        select.form-select(aria-label='Asset category selection' name="category" id="category")
+          option(selected='') Select an asset category !
+          each value of categories 
+            option(value=value.id) #{value.name}
       div
         label.form-label(for="make") Make
         input.form-control(type="text", name="make",id="make" placeholder="Dell") 
@@ -41,16 +48,16 @@ block content
       div
         label.form-label(for="serialNumber") Serial Number
         input.form-control(type="text", name="serialNumber",id="serialNumber" placeholder="XXX-XXX-XXX")
-      button.btn.btn-primary.w-50(type="submit") Add
-      .alert.alert-success(role="alert" class=alert||"d-none" id="userAddAlert") #{alertMessage} 
-    script.
-      const alert=document.getElementById("userAddAlert")
-      setTimeout(()=>{
-        if(alert.classList.contains("d-block")){
-          alert.classList.replace("d-block","d-none");
-        }
-      },5000);
-  script(src="/javascripts/custom/employeeModal.js") 
-  script(src="/javascripts/custom/deleteModal.js") 
+      button.btn.btn-primary.w-50.mt-4(type="submit") Add
+      .alert.alert-success(role="alert" class=alert||"d-none" id="assetAddAlert") #{alertMessage} 
+  script.
+    const alert=document.getElementById("assetAddAlert")
+    setTimeout(()=>{
+      if(alert.classList.contains("d-block")){
+        alert.classList.replace("d-block","d-none");
+      }
+    },5000);
+  script(src="/javascripts/custom/assets/assetModal.js") 
+  script(src="/javascripts/custom/assets/deleteModal.js") 
 
 
