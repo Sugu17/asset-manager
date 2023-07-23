@@ -2,8 +2,8 @@ extends layout.pug
 
 block content 
   div.p-4.d-flex.flex-row.gap-5.bg-light
-    div.d-flex.flex-column.gap-4.flex-grow-1
-      form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees" method="get")
+    div.d-flex.flex-column.gap-4.flex-grow-1(style="max-width:900px")
+      form.form-check.form-switch.d-flex.gap-4.mx-2(action="/issue" method="get")
         input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
         label.form-check-label(for="activefilerSwitch") Only Active Users
       script.
@@ -16,46 +16,53 @@ block content
             activeSwitch.closest('form').submit();
           }
           else 
-            window.location.href="/employees"
+            window.location.href="/issue"
         }
       .container.fluid.p-3.rounded-5
-        include modals/employees/employee-modal
-        include modals/employees/confirm-modal
-        table.table.display.table-light.table-hover#employee-table
+        table.table.display.table-light.table-hover#issue-table
           thead
             tr 
               th(scope="col") Name
               th(scope="col") Phone Number
               th(scope="col") Department 
-              th(scope="col") Edit
-              th(scope="col") Delete
+              th(scope="col") Select
           tbody
             each value of employees
               tr 
                 td #{value.name}
                 td #{value.phone}
                 td #{value.department}
-                td 
-                  button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-data=value) Edit
-                td 
-                  button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
-                  input(type="hidden", name="deletionId" value=value.id)
-
-    form.d-flex.flex-column.align-items-start.mt-5.bg-light.gap-4(action="/employees", method="post")
-      h2 Create a new user
-      div
-        label.form-label(for="name") Employee Name
-        input.form-control(type="text", name="name",id="name") 
-      div
-        label.form-label(for="phone") Phone number
-        input.form-control(type="tel", name="phone",id="phone")
-      div
-        label.form-label(for="department") Department
-        input.form-control(type="text", name="department",id="department") 
-      div.d-flex.gap-3
-        input.form-check-input(type="checkbox", name="active",id="isActive")
-        label.form-check-label(for="isActive") Active Employee?
-      button.btn.btn-primary.w-50(type="submit") Add
+                - const selectId="sel"+value.id
+                td
+                  button.btn.btn-success(type="submit" id=selectId data-selectedEmp=value onClick="handleIssueSelect(event)") Select
+                  input(type="hidden", name="allAssets" id="allAssets" value=assets)
+    .d-flex.flex-column.align-items-start.mt-2.bg-light.gap-3
+      .card
+        .card-header.fs-4.fw-semibold Selected Employee
+        ul.list-group.list-group-flush 
+          li.list-group-item 
+            span.fs-5.fw-medium Name 
+            span#selEmpName Value
+          li.list-group-item 
+            span.fs-5.fw-medium Phone Number 
+            span#selEmpNum Value
+          li.list-group-item 
+            span.fs-5.fw-medium Department 
+            span#selEmpDep Value
+      h3.mt-3 Issued Assets 
+      ul.list-group#issueAssetList
+      .d-flex.flex-column.gap-3 
+        h3.m-0 Issue an asset 
+        .dropdown-center 
+          button.btn.btn-primary.dropdown-toggle(type="button" data-bs-toggle="dropdown" aria-expanded="false") Asset category 
+          ul.dropdown-menu 
+            each value of categories 
+              li
+                a.dropdown-item(onClick="handleCategoryChange(event)" data-category=value.id) #{value.name}
+        form(action="/employees", method="post")
+          label.form-label.fs-5.fw-medium(for="assetSel") Asset to issue
+          select.form-select(name="issueAsset" id="assetSel" aria-label="Select an asset to issue") 
+            option(selected) Select asset!
       .alert.alert-success(role="alert" class=alert||"d-none" id="userAddAlert") #{alertMessage} 
     script.
       const alert=document.getElementById("userAddAlert")
@@ -64,7 +71,6 @@ block content
           alert.classList.replace("d-block","d-none");
         }
       },5000);
-  script(src="/javascripts/custom/employees/employeeModal.js") 
-  script(src="/javascripts/custom/employees/deleteModal.js") 
+  script(src="/javascripts/custom/issue/issueInput.js") 
 
 

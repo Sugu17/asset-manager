@@ -12,3 +12,8 @@ const categoryTable = new DataTable("#category-table", {
   pageLength: 9,
   columnDefs: [{ orderable: false, targets: [1, 2] }],
 });
+
+const issueTable = new DataTable("#issue-table", {
+  pageLength: 9,
+  columnDefs: [{ orderable: false, targets: [3] }],
+});

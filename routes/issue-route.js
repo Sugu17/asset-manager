@@ -1,19 +1,29 @@
 var express = require("express");
-const Employee = require("../models/employee-model");
+const { Employee, Asset, Category } = require("../models/association");
 var router = express.Router();
 
 router.get("/", async (req, res, next) => {
-  const employees = await Employee.findAll();
+  const employees = await Employee.findAll({ include: Asset });
+  const assets = await Asset.findAll();
+  const categories = await Category.findAll();
   const queries = req.query;
   if (queries.filterBy) {
     const filterResponse = employees.filter(
       (employee) => employee.isActive === true
     );
-    res.render("employees", {
+    res.render("issue", {
       employees: filterResponse,
       filterType: "active",
+      assets,
+      categories,
     });
-  } else res.render("issue", { employees, filterType: "inactive" });
+  } else
+    res.render("issue", {
+      employees,
+      filterType: "inactive",
+      assets,
+      categories,
+    });
 });
 
 const updateEmployee = async (req, res, existingEmployee) => {
