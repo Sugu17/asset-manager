@@ -2,32 +2,40 @@ extends layout.pug
 
 block content 
   div.p-4.d-flex.flex-row.gap-5.bg-light
-    .container.fluid.p-3.rounded-5
-      include modals/assets/asset-modal
-      include modals/assets/confirm-modal
-      table.table.display.table-light.table-hover#asset-table
-        thead
-          tr 
-            th(scope="col") Make
-            th(scope="col") Model
-            th(scope="col") Series 
-            th(scope="col") Serial Number
-            th(scope="col") Category
-            th(scope="col") Edit
-            th(scope="col") Delete
-        tbody
-          each value of assets
-            tr
-              td #{value.make} 
-              td #{value.model} 
-              td #{value.series} 
-              td #{value.serialNumber}
-              td #{value.categoryId}
-              td 
-                button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-asset=value data-bs-categories=categories) Edit
-              td 
-                button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
-                input(type="hidden", name="deletionId" value=value.id)
+    div.d-flex.flex-column.gap-4.flex-grow-1
+      h4.m-0 Filter by asset category
+      .d-flex.gap-4.mx-2
+        each category of categories 
+          - let filterId="filterToggler"+category.name
+          - const isActive=category.name===activeFilter?true:null;
+            input.btn-check(type="checkbox" checked=isActive name="filterBy" id=filterId value=category.name autocomplete="off" onclick="handleFilterToggle(event)") 
+            label.btn.btn-outline-primary(for=filterId) #{category.name}
+      .container.fluid.p-3.rounded-5
+        include modals/assets/asset-modal
+        include modals/assets/confirm-modal
+        table.table.display.table-light.table-hover#asset-table
+          thead
+            tr 
+              th(scope="col") Make
+              th(scope="col") Model
+              th(scope="col") Series 
+              th(scope="col") Serial Number
+              th(scope="col") Category
+              th(scope="col") Edit
+              th(scope="col") Delete
+          tbody
+            each value of assets
+              tr
+                td #{value.make} 
+                td #{value.model} 
+                td #{value.series} 
+                td #{value.serialNumber}
+                td #{value.Category.name}
+                td 
+                  button.btn.btn-primary(type="submit" data-bs-toggle="modal" data-bs-target="#editModal" data-bs-asset=value data-bs-categories=categories) Edit
+                td 
+                  button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
+                  input(type="hidden", name="deletionId" value=value.id)
     form.d-flex.flex-column.align-items-start.mt-3.bg-light.gap-3(action="/assets", method="post")
       h2 Create a new asset
       div 
@@ -59,5 +67,6 @@ block content
     },5000);
   script(src="/javascripts/custom/assets/assetModal.js") 
   script(src="/javascripts/custom/assets/deleteModal.js") 
+  script(src="/javascripts/custom/assets/filterSubmit.js")
 
 

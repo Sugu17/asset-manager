@@ -44,7 +44,7 @@ router.post("/", async (req, res, next) => {
   });
 });
 
-router.delete("/:CategoryId", async (req, res) => {
+router.delete("/:categoryId", async (req, res) => {
   const CategoryToBeDeletedId = req.params.CategoryId;
   const count = await Category.destroy({
     where: { id: CategoryToBeDeletedId },

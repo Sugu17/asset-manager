@@ -2,14 +2,26 @@ const express = require("express");
 const router = express.Router();
 const Asset = require("../models/asset-model");
 const Category = require("../models/category-model");
-const { Client } = require("pg");
+
 router.get("/", async (req, res) => {
   const assets = await Asset.findAll({ include: Category });
   const categories = await Category.findAll();
-  res.render("assets", {
-    assets,
-    categories,
-  });
+  const filterBy = req.query.filterBy;
+  if (filterBy) {
+    const filteredResponse = assets.filter(
+      (asset) => asset.Category.name === filterBy
+    );
+    res.render("assets", {
+      assets: filteredResponse,
+      categories,
+      activeFilter: filterBy,
+    });
+  } else {
+    res.render("assets", {
+      assets,
+      categories,
+    });
+  }
 });
 
 const updateAsset = async (req, res, existingAsset) => {
