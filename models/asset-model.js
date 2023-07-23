@@ -36,15 +36,6 @@ const Asset = db.define(
   }
 );
 
-// Relationship
-Category.hasMany(Asset);
-Asset.belongsTo(Category);
-
-Category.sync({ force: false }).then(() =>
-  console.log("Category tables synced...")
-);
-Asset.sync({ force: false }).then(() => console.log("Asset tables synced..."));
-
 // Asset.create({
 //   make: "Dell",
 //   model: "XPS",

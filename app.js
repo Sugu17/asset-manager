@@ -8,6 +8,7 @@ const employeeRouter = require("./routes/employees-route");
 const assetRouter = require("./routes/assets-route");
 const categoryRouter = require("./routes/category-route");
 const issueRouter = require("./routes/issue-route");
+const db = require("./models/db");
 const app = express();
 
 // view engine setup

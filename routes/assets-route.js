@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const Asset = require("../models/asset-model");
-const Category = require("../models/category-model");
+const { Asset, Category, Employee } = require("../models/association");
 
 router.get("/", async (req, res) => {
-  const assets = await Asset.findAll({ include: Category });
+  const assets = await Asset.findAll({ include: Category, Employee });
   const categories = await Category.findAll();
   const filterBy = req.query.filterBy;
   if (filterBy) {
@@ -31,13 +30,16 @@ const updateAsset = async (req, res, existingAsset) => {
     model: clientData.model,
     series: clientData.series,
     serialNumber: clientData.serialNumber,
-    CategoryId: +clientData.category,
+    CategoryId: clientData.category,
   });
   return `Asset ID - ${updatedAsset.id} updated with new details`;
 };
 
 const addAsset = async (req, res) => {
   const clientData = req.body;
+  if (!clientData.category) {
+    res.send("Category ID not provided");
+  }
   const newAsset = await Asset.create({
     make: clientData.make,
     model: clientData.model,
