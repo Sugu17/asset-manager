@@ -1,9 +1,10 @@
 extends layout 
 
 block content 
-  div.p-4.d-flex.flex-row.gap-5.bg-light
-    div.d-flex.flex-column.gap-4.flex-grow-1
-      h3.m-0 View asset history
+  div.px-5.py-3.d-flex.flex-row.gap-5.bg-light
+    .d-flex.flex-column.gap-4.flex-grow-1.p-3
+      include modals/scrap/confirm-modal
+      h3.m-0 Scrap an asset
       .d-flex.gap-4.mx-2
         each category of categories 
           - let filterId="filterToggler"+category.name
@@ -13,7 +14,7 @@ block content
         input.btn-check(type="checkbox" name="clearFilters" id="clearFilters" value="clear" autocomplete="off" onclick="handleFilterToggle(event)") 
         label.btn.btn-secondary(for="clearFilters") Clear Filters
       .container.fluid.p-3.rounded-5
-        table.table.display.table-light.table-hover#history-table
+        table.table.display.table-light.table-hover.py-4#scrap-table
           thead
             tr 
               th(scope="col") Make
@@ -21,7 +22,7 @@ block content
               th(scope="col") Series 
               th(scope="col") Serial Number
               th(scope="col") Category
-              th(scope="col") Select
+              th(scope="col") Mark an asset
           tbody
             each value of assets
               tr
@@ -31,33 +32,24 @@ block content
                 td #{value.serialNumber}
                 td #{value.Category.name}
                 - const selectId="sel"+value.id
+                - const btnText= value.isObsolete?"Make Active":"Mark Obsolete";
                   td
-                    button.btn.btn-success.selectorBtn(type="submit" id=selectId data-selectedAsset=value onClick="handleAssetSelect(event)") Select
-
-    .d-flex.flex-column.align-items-start.mt-2.bg-light.gap-3.px-3
-      .card(style="width:300px")
-        .card-header.fs-4.fw-semibold Selected Asset
-        ul.list-group.list-group-flush 
-          li.list-group-item.d-flex.justify-content-between 
-            span.fs-5.fw-medium Make 
-            span.text#selAssetMake Value
-          li.list-group-item.d-flex.justify-content-between
-            span.fs-5.fw-medium Model
-            span#selAssetModel Value
-          li.list-group-item.d-flex.justify-content-between
-            span.fs-5.fw-medium Serial Number
-            span#selAssetSerial Value
-      h4.mt-3 Asset History 
-      .card(style="width:330px")
-        ul.list-group.list-group-flush#assetHistoryList
-
-
-
+                    button.btn.selectorBtn(type="submit" id=selectId data-selectedAsset=value data-bs-toggle="modal" data-bs-target="#confirmModal" onClick="modalTriggered(event)") #{btnText}
+      .alert.alert-success(role="alert" class=alert||"d-none" id="markAlert") #{alertMessage} 
+  
+  script.
+    const alert=document.getElementById("markAlert")
+    setTimeout(()=>{
+      if(alert.classList.contains("d-block")){
+        alert.classList.replace("d-block","d-none");
+      }
+    },5000);
+  
   script.
     if ( window.history.replaceState ) {
       window.history.replaceState( null, null, window.location.href );
     }
       
-  script(src="/javascripts/custom/history/historySelect.js") 
+  script(src="/javascripts/custom/scrap/scrapSelect.js") 
 
 

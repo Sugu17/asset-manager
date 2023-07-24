@@ -1,0 +1,16 @@
+
+#confirmModal.modal.fade(tabindex='-1' aria-labelledby='confirmModalLabel' aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h1#confirmModalLabel.modal-title.fs-5 Confirm Asset Marking 
+        button.btn-close(type='button' data-bs-dismiss='modal' aria-label='Close')
+      .modal-body
+        p.fs-5.fw-medium#confirmModalText 
+        p.text-warning.fs-5.fw-semibold This will affect all the other pages!
+      .modal-footer
+        button.btn.btn-secondary(type='button' data-bs-dismiss='modal') Cancel
+        form#assetMarkForm(action="/scrap", method="post") 
+          input#assetIdField(type="hidden", name="assetId")
+          input#obsoleteField(type="hidden", name="isObsolete")
+          button.btn.btn-danger#markAssetBtn(type='button') Confirm
