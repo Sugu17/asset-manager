@@ -1,0 +1,81 @@
+extends layout.pug
+
+block content 
+  div.p-4.d-flex.flex-row.gap-5.bg-light
+    div.d-flex.flex-column.gap-4.flex-grow-1(style="max-width:900px")
+      form.form-check.form-switch.d-flex.gap-4.mx-2(action="/issue" method="get")
+        input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
+        label.form-check-label(for="activefilerSwitch") Only Active Users
+      script.
+        if(document.URL.includes("filterBy=active"))
+          document.getElementById("activefilerSwitch").setAttribute("checked","true")
+        function filterSubmit(event){
+          const activeSwitch=event.currentTarget;
+          if(activeSwitch.value==="inactive"){
+            activeSwitch.value="active"
+            activeSwitch.closest('form').submit();
+          }
+          else 
+            window.location.href="/return"
+        }
+      .container.fluid.p-3.rounded-5
+        table.table.display.table-light.table-hover#return-table
+          thead
+            tr 
+              th(scope="col") Name
+              th(scope="col") Phone Number
+              th(scope="col") Department 
+              th(scope="col") Select
+          tbody
+            each value of employees
+              tr 
+                td #{value.name}
+                td #{value.phone}
+                td #{value.department}
+                - const selectId="sel"+value.id
+                td
+                  button.btn.btn-success.selectorBtn(type="submit" id=selectId data-selectedEmp=value onClick="handleReturnSelect(event)") Select
+      
+      .alert.alert-success(role="alert" class=alert||"d-none" id="returnAddAlert") #{alertMessage} 
+
+    .d-flex.flex-column.align-items-start.mt-2.bg-light.gap-2
+      .card
+        .card-header.fs-4.fw-semibold Selected Employee
+        ul.list-group.list-group-flush 
+          li.list-group-item 
+            span.fs-5.fw-medium Name 
+            span#selEmpName Value
+          li.list-group-item 
+            span.fs-5.fw-medium Phone Number 
+            span#selEmpNum Value
+          li.list-group-item 
+            span.fs-5.fw-medium Department 
+            span#selEmpDep Value
+      h4.mt-3 Issued Assets 
+      ul.list-group#returnAssetList
+      .d-flex.flex-column.gap-3.mt-3 
+        h4.m-0 Return an asset 
+        form.d-flex.flex-column.gap-3(action="/issue", method="post" onSubmit="handleFormSubmit(event)")
+          input(type="hidden" name="employeeId" id="selEmployeeId")
+          div
+            label.form-label.fs-5.fw-medium(for="assetSel") Asset to return
+            select.form-select(name="assetId" id="assetSel" aria-label="Select an asset to issue" multiple) 
+              option(selected) Select asset!
+          div 
+            label.form-label(for="returnReason") Reason for return?
+            input.form-control(type="text", name="returnReason" id="returnReason" placeholder="Upgrade, Repair...etc")  
+          button.btn.btn-primary.mt-3(type="submit") Return Asset
+    script.
+      const alert=document.getElementById("returnAddAlert")
+      setTimeout(()=>{
+        if(alert.classList.contains("d-block")){
+          alert.classList.replace("d-block","d-none");
+        }
+      },5000);
+    script.
+      if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+      } 
+  script(src="/javascripts/custom/return/returnInput.js") 
+
+
