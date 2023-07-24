@@ -17,3 +17,8 @@ const issueTable = new DataTable("#issue-table", {
   pageLength: 9,
   columnDefs: [{ orderable: false, targets: [3] }],
 });
+
+const returnTable = new DataTable("#return-table", {
+  pageLength: 9,
+  columnDefs: [{ orderable: false, targets: [3] }],
+});

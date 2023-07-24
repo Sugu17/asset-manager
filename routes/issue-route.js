@@ -5,6 +5,7 @@ var router = express.Router();
 router.get("/", async (req, res, next) => {
   const employees = await Employee.findAll({ include: Asset });
   const assets = await Asset.findAll({ where: { EmployeeId: null } });
+  console.log(assets);
   const categories = await Category.findAll();
   const queries = req.query;
   if (queries.filterBy) {
