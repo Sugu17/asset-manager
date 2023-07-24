@@ -5,7 +5,7 @@ function assignStyle() {
   for (const btn of selectToggleBtns) {
     const btnText = btn.innerText;
     if (btnText === "Make Active") {
-      btn.classList.add("btn-secondary");
+      btn.classList.add("btn-success");
     } else {
       btn.classList.add("btn-danger");
     }
