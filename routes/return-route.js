@@ -1,5 +1,10 @@
 var express = require("express");
-const { Employee, Asset, Category } = require("../models/association");
+const {
+  Employee,
+  Asset,
+  Category,
+  AssetEvent,
+} = require("../models/association");
 const { Op } = require("sequelize");
 var router = express.Router();
 
@@ -38,12 +43,22 @@ router.get("/", async (req, res, next) => {
 
 const returnAsset = async (req, res) => {
   const clientData = req.body;
-  const assets = clientData.assetId;
+
+  let assets;
+  if (Array.isArray(clientData.assetId)) {
+    assets = clientData.assetId;
+  } else {
+    assets = [clientData.assetId];
+  }
   for (const assetId of assets) {
     const selectedAsset = await Asset.findByPk(assetId, {
       include: Employee,
     });
     selectedAsset.update({ EmployeeId: null });
+    const newEvent = await AssetEvent.create({
+      AssetId: assetId,
+      eventMessage: `Asset ID-${clientData.assetId} returned from Employee ID-${clientData.employeeId}`,
+    });
   }
   return `Employee ID - ${
     clientData.employeeId
