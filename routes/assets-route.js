@@ -1,9 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { Asset, Category, Employee } = require("../models/association");
+const {
+  Asset,
+  Category,
+  Employee,
+  AssetEvent,
+} = require("../models/association");
 
 router.get("/", async (req, res) => {
-  const assets = await Asset.findAll({ include: Category, Employee });
+  const assets = await Asset.findAll({
+    include: [Category, Employee],
+  });
   const categories = await Category.findAll();
   const filterBy = req.query.filterBy;
   if (filterBy) {
@@ -40,12 +47,17 @@ const addAsset = async (req, res) => {
   if (!clientData.category) {
     res.send("Category ID not provided");
   }
+
   const newAsset = await Asset.create({
     make: clientData.make,
     model: clientData.model,
     series: clientData.series,
     serialNumber: clientData.serialNumber,
     CategoryId: +clientData.category,
+  });
+  const newEvent = await AssetEvent.create({
+    eventMessage: `Asset ID-${newAsset.id} created!`,
+    AssetId: newAsset.id,
   });
   // .then(() => console.log("Asset added successfully"))
   // .catch((err) => console.log("Error adding asset!", err));

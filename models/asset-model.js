@@ -36,24 +36,4 @@ const Asset = db.define(
   }
 );
 
-// Asset.create({
-//   make: "Dell",
-//   model: "XPS",
-//   series: "15",
-//   serialNumber: "23244309",
-//   CategoryId: 1,
-// })
-//   .then("Asset created")
-//   .catch((err) => console.log("Error adding asset", err));
-
-// Asset.create({
-//   make: "HP",
-//   model: "Omen",
-//   series: "15",
-//   serialNumber: "232443086",
-//   CategoryId: 1,
-// })
-//   .then("Asset created")
-//   .catch((err) => console.log("Error adding asset", err));
-
 module.exports = Asset;
