@@ -1,7 +1,10 @@
 extends layout.pug
 
+block title 
+  title Manage Employees
+
 block content 
-  div.p-4.d-flex.flex-row.gap-5.bg-light
+  div.p-5.d-flex.flex-row.gap-5.bg-light
     div.d-flex.flex-column.gap-4.flex-grow-1
       form.form-check.form-switch.d-flex.gap-4.mx-2(action="/employees" method="get")
         input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
@@ -21,7 +24,7 @@ block content
       .container.fluid.p-3.rounded-5
         include modals/employees/employee-modal
         include modals/employees/confirm-modal
-        table.table.display.table-light.table-hover#employee-table
+        table.table.display.table-light.table-hover.pt-4#employee-table
           thead
             tr 
               th(scope="col") Name
@@ -42,7 +45,7 @@ block content
                   input(type="hidden", name="deletionId" value=value.id)
 
     form.d-flex.flex-column.align-items-start.mt-5.bg-light.gap-4(action="/employees", method="post")
-      h2 Create a new user
+      h4.fw-semibold Create a new user
       div
         label.form-label(for="name") Employee Name
         input.form-control(type="text", name="name",id="name") 

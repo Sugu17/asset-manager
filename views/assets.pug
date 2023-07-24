@@ -1,9 +1,12 @@
 extends layout.pug
 
+block title 
+  title Manage Assets
+
 block content 
-  div.p-4.d-flex.flex-row.gap-5.bg-light
+  div.p-5.d-flex.flex-row.gap-5.bg-light
     div.d-flex.flex-column.gap-4.flex-grow-1
-      h4.m-0 Filter by asset category
+      h3.fw-bold Filter by asset category
       .d-flex.gap-4.mx-2
         each category of categories 
           - let filterId="filterToggler"+category.name
@@ -15,7 +18,7 @@ block content
       .container.fluid.p-3.rounded-5
         include modals/assets/asset-modal
         include modals/assets/confirm-modal
-        table.table.display.table-light.table-hover#asset-table
+        table.table.display.table-light.table-hover.pt-4#asset-table
           thead
             tr 
               th(scope="col") Make
@@ -39,7 +42,7 @@ block content
                   button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
                   input(type="hidden", name="deletionId" value=value.id)
     form.d-flex.flex-column.align-items-start.mt-3.bg-light.gap-3(action="/assets", method="post")
-      h2 Create a new asset
+      h4.fw-semibold Create a new asset
       div 
         label.form-label(for="category") Category
         select.form-select(aria-label='Asset category selection' name="category" id="category")

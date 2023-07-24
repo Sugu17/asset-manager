@@ -1,7 +1,10 @@
 extends layout.pug
 
+block title 
+  title Return Asset
+
 block content 
-  div.p-4.d-flex.flex-row.gap-5.bg-light
+  div.p-5.d-flex.flex-row.gap-5.bg-light
     div.d-flex.flex-column.gap-4.flex-grow-1(style="max-width:900px")
       form.form-check.form-switch.d-flex.gap-4.mx-2(action="/return" method="get")
         input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
@@ -18,8 +21,9 @@ block content
           else 
             window.location.href="/return"
         }
-      .container.fluid.p-3.rounded-5
-        table.table.display.table-light.table-hover#return-table
+      .container.fluid.p-0.rounded-5
+        h3.fw-bold.mb-4 Return an asset
+        table.table.display.table-light.table-hover.pt-4#return-table
           thead
             tr 
               th(scope="col") Name
@@ -62,7 +66,7 @@ block content
             select.form-select(name="assetId" id="assetSel" aria-label="Select an asset to issue" multiple) 
               option(selected) Select asset!
           div 
-            label.form-label(for="returnReason") Reason for return?
+            label.form-label(for="returnReason").fw-medium Reason for return?
             input.form-control(type="text", name="returnReason" id="returnReason" placeholder="Upgrade, Repair...etc")  
           button.btn.btn-primary.mt-3(type="submit") Return Asset
     script.

@@ -1,12 +1,15 @@
 extends layout.pug
 
+block title 
+  title Manage Categories
+
 block content 
-  div.p-4.d-flex.flex-row.gap-5.bg-light
+  div.p-5.d-flex.flex-row.gap-5.bg-light
     .container.fluid.p-0.rounded-5.w-75
-      h2.mb-4 Categories
+      h3.fw-bold.mb-4 Categories
       include modals/categories/category-modal
       include modals/categories/confirm-modal
-      table.table.display.table-light.table-hover#category-table
+      table.table.display.table-light.table-hover.pt-4#category-table
         thead
           tr 
             th(scope="col") Name
@@ -22,8 +25,8 @@ block content
                 button.btn.btn-danger(type="submit" data-bs-toggle="modal" data-bs-target="#confirmModal" data-bs-data=value onclick="modalTriggered(event)") Delete
                 input(type="hidden", name="deletionId" value=value.id)
 
-    form.d-flex.flex-column.align-items-start.mt-5.bg-light.gap-4.flex-grow-1(action="/categories", method="post")
-      h2 Create a new category
+    form.d-flex.flex-column.align-items-start.mt-3.bg-light.gap-4.flex-grow-1(action="/categories", method="post")
+      h4.fw-semibold.text-nowrap Create a new category
       div
         label.form-label(for="name") Category Name
         input.form-control(type="text", name="name",id="name") 

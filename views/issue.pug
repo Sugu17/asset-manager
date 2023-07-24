@@ -1,7 +1,10 @@
 extends layout.pug
 
+block title 
+  title Issue Asset
+
 block content 
-  div.p-4.d-flex.flex-row.gap-5.bg-light
+  div.p-5.d-flex.flex-row.gap-5.bg-light
     div.d-flex.flex-column.gap-4.flex-grow-1(style="max-width:900px")
       form.form-check.form-switch.d-flex.gap-4.mx-2(action="/issue" method="get")
         input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
@@ -18,8 +21,9 @@ block content
           else 
             window.location.href="/issue"
         }
-      .container.fluid.p-3.rounded-5
-        table.table.display.table-light.table-hover#issue-table
+      .container.fluid.p-0
+        h3.fw-bold.mb-4 Issue an Asset
+        table.table.display.table-light.table-hover.pt-4#issue-table
           thead
             tr 
               th(scope="col") Name
@@ -39,7 +43,7 @@ block content
       
       .alert.alert-success(role="alert" class=alert||"d-none" id="issueAddAlert") #{alertMessage} 
 
-    .d-flex.flex-column.align-items-start.mt-2.bg-light.gap-3
+    .d-flex.flex-column.align-items-start.mt-3.bg-light.gap-3
       .card(style="width:300px")
         .card-header.fs-4.fw-semibold Selected Employee
         ul.list-group.list-group-flush 

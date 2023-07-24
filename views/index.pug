@@ -1,5 +1,23 @@
 extends layout
 
+block title 
+  title Asset Manager
+
 block content
-  h1= title
-  p Welcome to #{title}
+  .px-5.py-4.d-flex.flex-column.homepage-bg
+    .d-flex.flex-column.px-5.py-3.gap-3(style="max-width:650px")
+      h1.fs-1.fw-bold(style="letter-spacing:1.2px;") Optimise Your Resources Your Ultimate Asset Management Solution 
+      p.fw-semibold(style="font-size:18px;line-height:1.8;") 
+        | Asset Manager, helps you achieve your financial goals and maximise the
+        | potential of your assets.Whether you're an individual investor, a business owner,
+        | or a seasoned financial professional, our comprehensive asset management services are tailored to meet your unique needs.
+      a.btn.btn-primary.py-3.px-5.rounded-4.align-self-start(href="/employees") Get Started
+    .bg-white
+    .d-flex.flex-column.p-5.gap-3 
+      h4.fw-semibold Have suggestions?
+      .card.border-seondary-subtle(style="max-width:20rem;background:transparent;")
+        .card-header.fs-5.fw-semibold Contact me 
+        .card-body 
+          a.text-body.d-flex.align-items-center.gap-3(href="https://github.com/Sugu17")
+            .fs-1(class="fa-brands fa-github")
+            span GitHub

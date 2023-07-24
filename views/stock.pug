@@ -1,9 +1,12 @@
 extends layout
 
+block title 
+  title View Asset Stock
+
 block content 
-  .d-flex.px-5.py-4.bg-light
+  .d-flex.p-5.bg-light
     .card.m-3(style="width:30%;")
-      .card-header.fs-2.fw-semibold Stocks 
+      .card-header.fs-3.fw-semibold Stocks 
       ul.list-group.list-group-flush
         each value of categories 
           li.list-group-item.d-flex.justify-content-between

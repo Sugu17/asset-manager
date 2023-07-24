@@ -1,10 +1,13 @@
 extends layout 
 
+block title 
+  title Scrap Asset
+
 block content 
-  div.px-5.py-3.d-flex.flex-row.gap-5.bg-light
-    .d-flex.flex-column.gap-4.flex-grow-1.p-3
+  div.p-5.d-flex.flex-row.gap-5.bg-light
+    .d-flex.flex-column.gap-4.flex-grow-1
       include modals/scrap/confirm-modal
-      h3.m-0 Scrap an asset
+      h3.fw-bold.mb-4 Scrap an asset
       .d-flex.gap-4.mx-2
         each category of categories 
           - let filterId="filterToggler"+category.name
@@ -13,8 +16,8 @@ block content
             label.btn.btn-outline-primary(for=filterId) #{category.name}
         input.btn-check(type="checkbox" name="clearFilters" id="clearFilters" value="clear" autocomplete="off" onclick="handleFilterToggle(event)") 
         label.btn.btn-secondary(for="clearFilters") Clear Filters
-      .container.fluid.p-3.rounded-5
-        table.table.display.table-light.table-hover.py-4#scrap-table
+      .container.fluid.p-0.rounded-5
+        table.table.display.table-light.table-hover.pt-4#scrap-table
           thead
             tr 
               th(scope="col") Make
