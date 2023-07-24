@@ -1,4 +1,4 @@
-module.exports = {
+module.exports.development = {
   HOST: "localhost",
   USER: "postgres",
   PASSWORD: "1717",
@@ -10,4 +10,11 @@ module.exports = {
     acquire: 30000,
     idle: 10000,
   },
+};
+
+module.exports.production = {
+  USER: "assetdb_user",
+  DB: "assetdb",
+  HOST: "dpg-civ515h5rnuhcnqilg0g-a.singapore-postgres.render.com",
+  dialect: "postgres",
 };
