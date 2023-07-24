@@ -3,7 +3,7 @@ extends layout.pug
 block content 
   div.p-4.d-flex.flex-row.gap-5.bg-light
     div.d-flex.flex-column.gap-4.flex-grow-1(style="max-width:900px")
-      form.form-check.form-switch.d-flex.gap-4.mx-2(action="/issue" method="get")
+      form.form-check.form-switch.d-flex.gap-4.mx-2(action="/return" method="get")
         input.form-check-input(type="checkbox" role="switch" style="transform:scale(1.5);" id="activefilerSwitch" onClick="filterSubmit(event)" name="filterBy" value=filterType)
         label.form-check-label(for="activefilerSwitch") Only Active Users
       script.
@@ -55,7 +55,7 @@ block content
       ul.list-group#returnAssetList
       .d-flex.flex-column.gap-3.mt-3 
         h4.m-0 Return an asset 
-        form.d-flex.flex-column.gap-3(action="/issue", method="post" onSubmit="handleFormSubmit(event)")
+        form.d-flex.flex-column.gap-3(action="/return", method="post")
           input(type="hidden" name="employeeId" id="selEmployeeId")
           div
             label.form-label.fs-5.fw-medium(for="assetSel") Asset to return

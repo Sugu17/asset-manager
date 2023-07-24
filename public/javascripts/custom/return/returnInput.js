@@ -75,7 +75,7 @@ function handleFormSubmit(event) {
   event.preventDefault();
   const form = event.currentTarget;
   const formData = new FormData(form);
-  for (const [key, value] of formData) {
-    console.log(key, value);
-  }
+  console.log(formData.get("employeeId"));
+  console.log(formData.getAll("assetId"));
+  console.log(formData.get("returnReason"));
 }

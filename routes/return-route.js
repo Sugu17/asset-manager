@@ -13,10 +13,8 @@ router.get("/", async (req, res, next) => {
     },
   });
   const assets = await Asset.findAll({
-    where: { EmployeeId: { [Op.not]: null } },
+    where: { EmployeeId: { [Op.ne]: null } },
   });
-  console.log("Employees", employees);
-  // console.log("Assets", assets);
   const categories = await Category.findAll();
   const queries = req.query;
   if (queries.filterBy) {
@@ -38,13 +36,18 @@ router.get("/", async (req, res, next) => {
     });
 });
 
-const issueAsset = async (req, res) => {
+const returnAsset = async (req, res) => {
   const clientData = req.body;
-  const selectedAsset = await Asset.findByPk(clientData.assetId, {
-    include: Employee,
-  });
-  selectedAsset.update({ EmployeeId: clientData.employeeId });
-  return `Employee ID - ${clientData.employeeId} issued ASN#${selectedAsset.serialNumber}`;
+  const assets = clientData.assetId;
+  for (const assetId of assets) {
+    const selectedAsset = await Asset.findByPk(assetId, {
+      include: Employee,
+    });
+    selectedAsset.update({ EmployeeId: null });
+  }
+  return `Employee ID - ${
+    clientData.employeeId
+  } returned Asset ID-${assets.join(", ")}`;
 };
 
 router.post("/", async (req, res, next) => {
@@ -53,14 +56,12 @@ router.post("/", async (req, res, next) => {
   const categories = await Category.findAll();
   const assets = await Asset.findAll({ where: { EmployeeId: null } });
   const employees = await Employee.findAll();
-
   if (clientData.employeeId) {
-    message = await issueAsset(req, res);
+    message = await returnAsset(req, res);
   }
-  res.render("issue", {
+  res.render("return", {
     employees,
     alert: "d-block",
-
     filterType: "inactive",
     alertMessage: message,
     categories,

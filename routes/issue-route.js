@@ -1,11 +1,15 @@
 var express = require("express");
-const { Employee, Asset, Category } = require("../models/association");
+const {
+  Employee,
+  Asset,
+  Category,
+  AssetEvent,
+} = require("../models/association");
 var router = express.Router();
 
 router.get("/", async (req, res, next) => {
   const employees = await Employee.findAll({ include: Asset });
   const assets = await Asset.findAll({ where: { EmployeeId: null } });
-  console.log(assets);
   const categories = await Category.findAll();
   const queries = req.query;
   if (queries.filterBy) {
@@ -33,6 +37,10 @@ const issueAsset = async (req, res) => {
     include: Employee,
   });
   selectedAsset.update({ EmployeeId: clientData.employeeId });
+  const newEvent = await AssetEvent.create({
+    AssetId: clientData.AssetId,
+    eventMessage: `Asset ID-${clientData.assetId} issued to Employee ID-${clientData.employeeId}`,
+  });
   return `Employee ID - ${clientData.employeeId} issued ASN#${selectedAsset.serialNumber}`;
 };
 
