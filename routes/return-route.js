@@ -54,7 +54,7 @@ const returnAsset = async (req, res) => {
     const selectedAsset = await Asset.findByPk(assetId, {
       include: Employee,
     });
-    selectedAsset.update({ EmployeeId: null });
+    await selectedAsset.update({ EmployeeId: null });
     const newEvent = await AssetEvent.create({
       AssetId: assetId,
       eventMessage: `Asset ID-${clientData.assetId} returned from Employee ID-${clientData.employeeId}`,

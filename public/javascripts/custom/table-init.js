@@ -27,3 +27,8 @@ const historyTable = new DataTable("#history-table", {
   pageLength: 9,
   columnDefs: [{ orderable: false, targets: [3] }],
 });
+
+const scrapTable = new DataTable("#scrap-table", {
+  pageLength: 9,
+  columnDefs: [{ orderable: false, targets: [5] }],
+});

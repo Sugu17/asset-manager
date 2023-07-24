@@ -29,6 +29,10 @@ const Asset = db.define(
     series: {
       type: DataTypes.STRING,
     },
+    isObsolete: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   {
     tableName: "Asset",
