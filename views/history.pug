@@ -1,0 +1,63 @@
+extends layout 
+
+block content 
+  div.p-4.d-flex.flex-row.gap-5.bg-light
+    div.d-flex.flex-column.gap-4.flex-grow-1
+      h4.m-0 View asset history
+      .d-flex.gap-4.mx-2
+        each category of categories 
+          - let filterId="filterToggler"+category.name
+          - const isActive=category.name===activeFilter?true:null;
+            input.btn-check(type="checkbox" checked=isActive name="filterBy" id=filterId value=category.name autocomplete="off" onclick="handleFilterToggle(event)") 
+            label.btn.btn-outline-primary(for=filterId) #{category.name}
+        input.btn-check(type="checkbox" name="clearFilters" id="clearFilters" value="clear" autocomplete="off" onclick="handleFilterToggle(event)") 
+        label.btn.btn-secondary(for="clearFilters") Clear Filters
+      .container.fluid.p-3.rounded-5
+        table.table.display.table-light.table-hover#history-table
+          thead
+            tr 
+              th(scope="col") Make
+              th(scope="col") Model
+              th(scope="col") Series 
+              th(scope="col") Serial Number
+              th(scope="col") Category
+              th(scope="col") Select
+          tbody
+            each value of assets
+              tr
+                td #{value.make} 
+                td #{value.model} 
+                td #{value.series} 
+                td #{value.serialNumber}
+                td #{value.Category.name}
+                - const selectId="sel"+value.id
+                  td
+                    button.btn.btn-success.selectorBtn(type="submit" id=selectId data-selectedAsset=value onClick="handleAssetSelect(event)") Select
+
+    .d-flex.flex-column.align-items-start.mt-2.bg-light.gap-3.px-3
+      .card(style="width:300px")
+        .card-header.fs-4.fw-semibold Selected Asset
+        ul.list-group.list-group-flush 
+          li.list-group-item.d-flex.justify-content-between 
+            span.fs-5.fw-medium Make 
+            span.text#selAssetMake Value
+          li.list-group-item.d-flex.justify-content-between
+            span.fs-5.fw-medium Model
+            span#selAssetModel Value
+          li.list-group-item.d-flex.justify-content-between
+            span.fs-5.fw-medium Serial Number
+            span#selAssetSerial Value
+      h4.mt-3 Asset History 
+      .card(style="width:330px")
+        ul.list-group.list-group-flush#assetHistoryList
+
+
+
+  script.
+    if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+    }
+      
+  script(src="/javascripts/custom/history/historySelect.js") 
+
+

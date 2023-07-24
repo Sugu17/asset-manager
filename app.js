@@ -10,6 +10,7 @@ const categoryRouter = require("./routes/category-route");
 const issueRouter = require("./routes/issue-route");
 const stockRouter = require("./routes/stock-route");
 const returnRouter = require("./routes/return-route");
+const historyRouter = require("./routes/history-route");
 const db = require("./models/db");
 const app = express();
 
@@ -30,6 +31,7 @@ app.use("/categories", categoryRouter);
 app.use("/issue", issueRouter);
 app.use("/stock", stockRouter);
 app.use("/return", returnRouter);
+app.use("/history", historyRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
