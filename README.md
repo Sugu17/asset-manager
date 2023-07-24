@@ -59,6 +59,7 @@ yarn start
 
 
 ## Todo
+- [ ]  Make the application mobile friendly
 - [ ]  Add authentication
 - [ ]  Fix form resubmission
 - [ ]  Polish UI
