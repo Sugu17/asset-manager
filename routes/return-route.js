@@ -17,9 +17,11 @@ router.get("/", async (req, res, next) => {
       },
     },
   });
+
   const assets = await Asset.findAll({
-    where: { EmployeeId: { [Op.ne]: null } },
+    where: { EmployeeId: { [Op.ne]: null }, isObsolete: false },
   });
+
   const categories = await Category.findAll();
   const queries = req.query;
   if (queries.filterBy) {
@@ -69,8 +71,20 @@ router.post("/", async (req, res, next) => {
   const clientData = req.body;
   let message;
   const categories = await Category.findAll();
-  const assets = await Asset.findAll({ where: { EmployeeId: null } });
-  const employees = await Employee.findAll();
+
+  const assets = await Asset.findAll({
+    where: { EmployeeId: null, isObsolete: false },
+  });
+
+  const employees = await Employee.findAll({
+    include: {
+      model: Asset,
+      where: {
+        EmployeeId: { [Op.ne]: null },
+      },
+    },
+  });
+
   if (clientData.employeeId) {
     message = await returnAsset(req, res);
   }

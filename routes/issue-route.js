@@ -9,7 +9,9 @@ var router = express.Router();
 
 router.get("/", async (req, res, next) => {
   const employees = await Employee.findAll({ include: Asset });
-  const assets = await Asset.findAll({ where: { EmployeeId: null } });
+  const assets = await Asset.findAll({
+    where: { EmployeeId: null, isObsolete: false },
+  });
   const categories = await Category.findAll();
   const queries = req.query;
   if (queries.filterBy) {
@@ -48,7 +50,9 @@ router.post("/", async (req, res, next) => {
   const clientData = req.body;
   let message;
   const categories = await Category.findAll();
-  const assets = await Asset.findAll({ where: { EmployeeId: null } });
+  const assets = await Asset.findAll({
+    where: { EmployeeId: null, isObsolete: false },
+  });
   const employees = await Employee.findAll();
 
   if (clientData.employeeId) {

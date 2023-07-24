@@ -9,6 +9,7 @@ const {
 
 router.get("/", async (req, res) => {
   const assets = await Asset.findAll({
+    where: { isObsolete: false },
     include: [Category, Employee],
   });
   const categories = await Category.findAll();
@@ -76,7 +77,10 @@ router.post("/", async (req, res, next) => {
       message = await addAsset(req, res);
     }
   }
-  const assets = await Asset.findAll({ include: Category });
+  const assets = await Asset.findAll({
+    include: Category,
+    where: { isObsolete: false },
+  });
   const categories = await Category.findAll();
   res.render("assets", {
     assets,
