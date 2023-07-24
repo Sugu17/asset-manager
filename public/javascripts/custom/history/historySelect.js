@@ -45,6 +45,10 @@ function handleAssetSelect(event) {
         li.className = "list-group-item list-group-item-secondary";
       } else if (history.eventMessage.includes("returned")) {
         li.className = "list-group-item list-group-item-info";
+      } else if (history.eventMessage.includes("obsolete")) {
+        li.className = "list-group-item list-group-item-danger";
+      } else if (history.eventMessage.includes("active")) {
+        li.className = "list-group-item list-group-item-warning";
       }
       historyList.appendChild(li);
     }
