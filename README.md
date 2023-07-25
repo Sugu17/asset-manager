@@ -1,17 +1,14 @@
-
 # Asset Manager
 
 An express.js application for managing assets used by employees.
-
 
 ## Demo
 
 View the application demonstration by clicking the link below
 
-[Deployment URL](https://asset-management-application.onrender.com/) - Deployed on render.com
+[Deployment URL](https://asset-management-application.onrender.com/) - Deployed on render.com ( Please view on a large screen device,not mobile friendly yet! )
 
 ## Tech Stack
-
 
 **Server:** Node, Express
 
@@ -24,7 +21,6 @@ View the application demonstration by clicking the link below
 **CSS:** Bootstrap
 
 **Tables:** DataTables
-
 
 ## Run Locally
 
@@ -52,15 +48,14 @@ Start the server
 yarn start
 ```
 
-
 ## Authors
 
 - [@sugumar](https://github.com/Sugu17)
 
-
 ## Todo
-- [ ]  Make the application mobile friendly
-- [ ]  Add authentication
-- [ ]  Fix form resubmission
-- [ ]  Polish UI
-- [ ]  Associate Make models with Category
+
+- [ ] Make the application mobile friendly
+- [ ] Add authentication
+- [ ] Fix form resubmission
+- [ ] Polish UI
+- [ ] Associate Make models with Category
