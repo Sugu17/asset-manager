@@ -13,9 +13,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, passwd, {
   host: host,
   dialect: dbConfig.dialect,
   logging: false,
-  // dialectOptions: {
-  //   ssl: true,
-  // },
+  dialectOptions: {
+    ssl: true,
+  },
 });
 
 // Development db
