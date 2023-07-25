@@ -40,7 +40,7 @@ const issueAsset = async (req, res) => {
   });
   selectedAsset.update({ EmployeeId: clientData.employeeId });
   const newEvent = await AssetEvent.create({
-    AssetId: clientData.AssetId,
+    AssetId: clientData.assetId,
     eventMessage: `Asset ID-${clientData.assetId} issued to Employee ID-${clientData.employeeId}`,
   });
   return `Employee ID - ${clientData.employeeId} issued ASN#${selectedAsset.serialNumber}`;
@@ -48,6 +48,7 @@ const issueAsset = async (req, res) => {
 
 router.post("/", async (req, res, next) => {
   const clientData = req.body;
+  console.log(clientData);
   let message;
   const categories = await Category.findAll();
   const assets = await Asset.findAll({
@@ -61,7 +62,6 @@ router.post("/", async (req, res, next) => {
   res.render("issue", {
     employees,
     alert: "d-block",
-
     filterType: "inactive",
     alertMessage: message,
     categories,
